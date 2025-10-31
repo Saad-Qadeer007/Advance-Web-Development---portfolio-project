@@ -1,0 +1,546 @@
+/* --- Global Setup & CSS Variables --- */
+/* Default: Dark Mode */
+:root {
+    --bg-color-1: #110f1b;
+    --bg-color-2: #25213a;
+    --text-color: #f0f0f0;
+    --primary-color: #00f2ea;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s ease;
+}
+
+/* Light Mode Variables */
+body.light-mode {
+    --bg-color-1: #f0f2f5;
+    --bg-color-2: #d9e2ef;
+    --text-color: #1a1a1a;
+    --primary-color: #0056b3;
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+/* --- Base & Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+    /* Offset for sticky header */
+}
+
+/* Prevent horizontal scrollbar caused by decorative glows while keeping Y visible */
+html,
+body {
+    overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
+body {
+    font-family: "Manrope", sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color-1);
+    /* Fallback */
+    transition: all var(--transition-speed);
+    overflow-y: hidden;
+}
+
+/* Animated Gradient Background */
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    background: linear-gradient(45deg,
+            var(--bg-color-1),
+            var(--bg-color-2),
+            var(--bg-color-1));
+    background-size: 200% 200%;
+    animation: gradient-flow 15s ease infinite;
+}
+
+@keyframes gradient-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* --- Utility Classes --- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section {
+    padding: 6rem 0;
+    z-index: 2;
+    position: relative;
+}
+
+h1,
+h2 {
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 3.5rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* --- Glassmorphism Base Class --- */
+.glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px var(--shadow-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all var(--transition-speed);
+}
+
+/* --- Header & Navigation --- */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 0;
+    /* Apply glass effect to the header */
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all var(--transition-speed);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    margin-left: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 400;
+    /* Micro-animation: Letter spacing */
+    transition: letter-spacing var(--transition-speed),
+        color var(--transition-speed);
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color var(--transition-speed), transform var(--transition-speed);
+}
+
+.theme-toggle-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.nav-toggle-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Mobile menu toggle (hidden on desktop) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color var(--transition-speed), transform var(--transition-speed);
+    margin-left: 1rem;
+}
+
+.menu-toggle:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.hero-text {
+    flex: 2;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin: 1rem 0;
+}
+
+.profile-image {
+    flex: 1;
+    max-width: 300px;
+    border-radius: 50%;
+    border: 3px solid var(--glass-border);
+}
+
+/* --- Skills Section --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-card {
+    /* Apply glass effect */
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    /* Micro-animation: Glow on hover */
+    transition: all var(--transition-speed);
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px 0 var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* Decorative gradients for all sections */
+.section.circle-gradient::before,
+.section.circle-gradient::after {
+    content: "";
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 50%;
+    z-index: 0;
+    opacity: 0.45;
+    filter: blur(120px);
+    pointer-events: none;
+    animation: floatGlow 10s ease-in-out infinite alternate;
+}
+
+.section.circle-gradient::before {
+    top: -400px;
+    left: -400px;
+    background: radial-gradient(circle at center, var(--primary-color), transparent 70%);
+}
+
+.section.circle-gradient::after {
+    bottom: -400px;
+    right: -400px;
+    background: radial-gradient(circle at center, #ff00c8, transparent 70%);
+}
+
+/* Ensure section content stays above decorative gradients */
+.section.circle-gradient>.container {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes floatGlow {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, -20px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* animation applied in .section pseudo-elements above */
+
+/* --- Projects Section --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    /* Apply glass effect */
+    composes: glass-card;
+    transition: all var(--transition-speed);
+    padding: 2rem;
+}
+
+.project-thumb {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+    background: rgba(255, 255, 255, 0.06);
+    margin-bottom: 1.25rem;
+}
+
+.project-thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 1px var(--glass-border);
+    pointer-events: none;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-speed), filter var(--transition-speed);
+}
+
+.project-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px var(--shadow-color);
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.04);
+}
+
+.project-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.project-card p {
+    margin-bottom: 1.5rem;
+}
+
+/* --- Button --- */
+.btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--bg-color-1);
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 0 var(--primary-color);
+}
+
+/* --- Contact Form --- */
+/* Shift the ::befre circle gradient bottom */
+#contact.section.circle-gradient::before {
+    top: 100px;
+}
+
+#contact.section.circle-gradient::after {
+    bottom: 0;
+}
+
+.contact-form {
+    /* Apply glass effect */
+    composes: glass-card;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    font-family: "Manrope", sans-serif;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #ccc;
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 3rem 0;
+    border-top: 1px solid var(--glass-border);
+}
+
+/* --- Scroll Animation --- */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body.nav-open .nav-menu {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: var(--header-height, 64px);
+        left: 0;
+        right: 0;
+        background: transparent;
+        /* glass provided by backdrop layer */
+        border: 1px solid var(--glass-border);
+        backdrop-filter: saturate(160%) blur(14px);
+        -webkit-backdrop-filter: saturate(160%) blur(14px);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        z-index: 1100;
+        /* above header */
+    }
+
+    /* Blurring backdrop placed under the dropdown; sized via JS */
+    .nav-backdrop {
+        position: fixed;
+        top: var(--header-height, 64px);
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: saturate(160%) blur(14px);
+        -webkit-backdrop-filter: saturate(160%) blur(14px);
+        z-index: 900;
+        /* below header(1000) and dropdown(1100) */
+        pointer-events: none;
+    }
+
+    body.light-mode .nav-backdrop {
+        background: rgba(255, 255, 255, 0.45);
+    }
+
+    body.nav-open .nav-menu .nav-item {
+        margin-left: 0;
+    }
+
+    body.nav-open .nav-menu .nav-link {
+        display: block;
+        padding: 0.75rem 0;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* Keep header glass blur while menu is open */
+}
